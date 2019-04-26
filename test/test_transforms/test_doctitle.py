@@ -8,7 +8,7 @@
 Tests for docutils.transforms.frontmatter.DocTitle.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.transforms.frontmatter import DocTitle, SectionSubTitle
 from docutils.parsers.rst import Parser, Directive
 from docutils.parsers.rst.directives import register_directive

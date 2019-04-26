@@ -9,7 +9,7 @@
 test get_parser_class
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.parsers import get_parser_class
 
 class GetParserClassTestCase(DocutilsTestSupport.StandardTestCase):

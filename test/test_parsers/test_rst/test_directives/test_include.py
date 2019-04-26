@@ -10,7 +10,7 @@ Tests for misc.py "include" directive.
 
 import os.path
 import sys
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.parsers.rst import states
 from docutils._compat import b
 from docutils.utils.code_analyzer import with_pygments
@@ -52,13 +52,13 @@ nonexistent_rel = DocutilsTestSupport.utils.relative_path(
 
 # Different error for path with 8bit chars with locale == C or None:
 try:
-    open(u'\u043c\u0438\u0440.txt')
+    open('\u043c\u0438\u0440.txt')
 except UnicodeEncodeError:
-    errstr_8bit_path = u"""\
+    errstr_8bit_path = """\
 Cannot encode input file path "\u043c\u0438\u0440.txt" (wrong locale?).\
 """
 except:
-    errstr_8bit_path = u"""\
+    errstr_8bit_path = """\
 InputError: [Errno 2] No such file or directory: '\u043c\u0438\u0440.txt'.\
 """
 
@@ -414,12 +414,12 @@ Include file is UTF-16-encoded, and is not valid ASCII.
             .. include:: %s
                :encoding: ascii
 """ % (utf_16_error_str, reldir(utf_16_file))],
-[u"""\
+["""\
 cyrillic filename:
 
 .. include:: \u043c\u0438\u0440.txt
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         cyrillic filename:
@@ -662,7 +662,7 @@ Testing errors in included file:
                 no bottom       border
 """ % {'source': reldir(include10), 'nonexistent': reldir(nonexistent),
        'unichr_exception':
-       DocutilsTestSupport.exception_data(unichr, int("11111111", 16))[2]
+       DocutilsTestSupport.exception_data(chr, int("11111111", 16))[2]
       }],
 ["""\
 Include file with whitespace in the path:

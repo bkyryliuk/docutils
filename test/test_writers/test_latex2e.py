@@ -10,7 +10,7 @@ Tests for latex2e writer.
 """
 
 import string
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     settings = {'use_latex_toc': False}

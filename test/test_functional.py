@@ -151,7 +151,7 @@ expected output and check it in:
         del params['test_source']
         del params['test_destination']
         # Delete private stuff like params['__builtins__']:
-        for key in params.keys():
+        for key in list(params.keys()):
             if key.startswith('_'):
                 del params[key]
         # Get output (automatically written to the output/ directory
@@ -194,8 +194,8 @@ expected output and check it in:
                 expected_path, params['destination_path']))
             if sys.version_info < (3,0):
                 diff = diff.encode(sys.stderr.encoding or 'ascii', 'replace')
-            print >>sys.stderr, '\n%s:' % (self,)
-            print >>sys.stderr, diff
+            print('\n%s:' % (self,), file=sys.stderr)
+            print(diff, file=sys.stderr)
             raise
         # Execute optional function containing extra tests:
         if '_test_more' in namespace:

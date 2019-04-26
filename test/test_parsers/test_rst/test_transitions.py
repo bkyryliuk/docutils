@@ -8,7 +8,7 @@
 Tests for transition markers.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.ParserTestSuite()

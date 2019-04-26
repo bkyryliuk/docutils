@@ -31,7 +31,7 @@ import codecs
 try: # from standard library module `io`
     from io import StringIO, BytesIO
 except ImportError: # new in Python 2.6
-    from StringIO import StringIO
+    from io import StringIO
     BytesIO = StringIO
 
 import DocutilsTestSupport              # must be imported before docutils
@@ -83,7 +83,7 @@ class SafeStringTests(unittest.TestCase):
 
     # test data:
     bs = b('\xfc')     # unicode(bs) fails, str(bs) in Python 3 return repr()
-    us = u'\xfc'       # bytes(us) fails; str(us) fails in Python 2
+    us = '\xfc'       # bytes(us) fails; str(us) fails in Python 2
     be = Exception(bs) # unicode(be) fails
     ue = Exception(us) # bytes(ue) fails, str(ue) fails in Python 2;
                        # unicode(ue) fails in Python < 2.6 (issue2517_)
@@ -98,7 +98,7 @@ class SafeStringTests(unittest.TestCase):
         # wrapping (not required with 7-bit chars) must not change the
         # result of conversions:
         bs7 = b('foo')
-        us7 = u'foo'
+        us7 = 'foo'
         be7 = Exception(bs7)
         ue7 = Exception(us7)
         self.assertEqual(str(42), str(SafeString(42)))
@@ -106,22 +106,22 @@ class SafeStringTests(unittest.TestCase):
         self.assertEqual(str(us7), str(SafeString(us7)))
         self.assertEqual(str(be7), str(SafeString(be7)))
         self.assertEqual(str(ue7), str(SafeString(ue7)))
-        self.assertEqual(unicode(7), unicode(SafeString(7)))
-        self.assertEqual(unicode(bs7), unicode(SafeString(bs7)))
-        self.assertEqual(unicode(us7), unicode(SafeString(us7)))
-        self.assertEqual(unicode(be7), unicode(SafeString(be7)))
-        self.assertEqual(unicode(ue7), unicode(SafeString(ue7)))
+        self.assertEqual(str(7), str(SafeString(7)))
+        self.assertEqual(str(bs7), str(SafeString(bs7)))
+        self.assertEqual(str(us7), str(SafeString(us7)))
+        self.assertEqual(str(be7), str(SafeString(be7)))
+        self.assertEqual(str(ue7), str(SafeString(ue7)))
 
     def test_ustr(self):
         """Test conversion to a unicode-string."""
         # unicode(self.bs) fails
-        self.assertEqual(unicode, type(unicode(self.wbs)))
-        self.assertEqual(unicode(self.us), unicode(self.wus))
+        self.assertEqual(str, type(str(self.wbs)))
+        self.assertEqual(str(self.us), str(self.wus))
         # unicode(self.be) fails
-        self.assertEqual(unicode, type(unicode(self.wbe)))
+        self.assertEqual(str, type(str(self.wbe)))
         # unicode(ue) fails in Python < 2.6 (issue2517_)
-        self.assertEqual(unicode, type(unicode(self.wue)))
-        self.assertEqual(self.us, unicode(self.wue))
+        self.assertEqual(str, type(str(self.wue)))
+        self.assertEqual(self.us, str(self.wue))
 
     def test_str(self):
         """Test conversion to a string (bytes in Python 2, unicode in Python 3)."""
@@ -135,7 +135,7 @@ class SafeStringTests(unittest.TestCase):
 
 class ErrorStringTests(unittest.TestCase):
     bs = b('\xfc')     # unicode(bs) fails, str(bs) in Python 3 return repr()
-    us = u'\xfc'       # bytes(us) fails; str(us) fails in Python 2
+    us = '\xfc'       # bytes(us) fails; str(us) fails in Python 2
 
     def test_str(self):
         self.assertEqual('Exception: spam',
@@ -146,12 +146,12 @@ class ErrorStringTests(unittest.TestCase):
                          str(ErrorString(ImportError(self.us))))
 
     def test_unicode(self):
-        self.assertEqual(u'Exception: spam',
-                         unicode(ErrorString(Exception(u'spam'))))
-        self.assertEqual(u'IndexError: '+self.us,
-                         unicode(ErrorString(IndexError(self.us))))
-        self.assertEqual(u'ImportError: %s' % SafeString(self.bs),
-                         unicode(ErrorString(ImportError(self.bs))))
+        self.assertEqual('Exception: spam',
+                         str(ErrorString(Exception('spam'))))
+        self.assertEqual('IndexError: '+self.us,
+                         str(ErrorString(IndexError(self.us))))
+        self.assertEqual('ImportError: %s' % SafeString(self.bs),
+                         str(ErrorString(ImportError(self.bs))))
 
 
 # ErrorOutput tests
@@ -160,7 +160,7 @@ class ErrorStringTests(unittest.TestCase):
 # Stub: Buffer with 'strict' auto-conversion of input to byte string:
 class BBuf(BytesIO, object): # super class object required by Python <= 2.5
     def write(self, data):
-        if isinstance(data, unicode):
+        if isinstance(data, str):
             data.encode('ascii', 'strict')
         super(BBuf, self).write(data)
 
@@ -184,15 +184,15 @@ class ErrorOutputTests(unittest.TestCase):
         e.write(b('b\xfc'))
         self.assertEqual(buf.getvalue(), b('b\xfc'))
         # encode unicode data with backslashescape fallback replacement:
-        e.write(u' u\xfc')
+        e.write(' u\xfc')
         self.assertEqual(buf.getvalue(), b('b\xfc u\\xfc'))
         # handle Exceptions with Unicode string args
         # unicode(Exception(u'e\xfc')) # fails in Python < 2.6
-        e.write(AttributeError(u' e\xfc'))
+        e.write(AttributeError(' e\xfc'))
         self.assertEqual(buf.getvalue(), b('b\xfc u\\xfc e\\xfc'))
         # encode with `encoding` attribute
         e.encoding = 'utf8'
-        e.write(u' u\xfc')
+        e.write(' u\xfc')
         self.assertEqual(buf.getvalue(), b('b\xfc u\\xfc e\\xfc u\xc3\xbc'))
 
     def test_ubuf(self):
@@ -200,16 +200,16 @@ class ErrorOutputTests(unittest.TestCase):
         # decode of binary strings
         e = ErrorOutput(buf, encoding='ascii')
         e.write(b('b\xfc'))
-        self.assertEqual(buf.getvalue(), u'b\ufffd') # use REPLACEMENT CHARACTER
+        self.assertEqual(buf.getvalue(), 'b\ufffd') # use REPLACEMENT CHARACTER
         # write Unicode string and Exceptions with Unicode args
-        e.write(u' u\xfc')
-        self.assertEqual(buf.getvalue(), u'b\ufffd u\xfc')
-        e.write(AttributeError(u' e\xfc'))
-        self.assertEqual(buf.getvalue(), u'b\ufffd u\xfc e\xfc')
+        e.write(' u\xfc')
+        self.assertEqual(buf.getvalue(), 'b\ufffd u\xfc')
+        e.write(AttributeError(' e\xfc'))
+        self.assertEqual(buf.getvalue(), 'b\ufffd u\xfc e\xfc')
         # decode with `encoding` attribute
         e.encoding = 'latin1'
         e.write(b(' b\xfc'))
-        self.assertEqual(buf.getvalue(), u'b\ufffd u\xfc e\xfc b\xfc')
+        self.assertEqual(buf.getvalue(), 'b\ufffd u\xfc e\xfc b\xfc')
 
 
 
@@ -224,32 +224,32 @@ class SafeStringTests_locale(unittest.TestCase):
         locale.setlocale(locale.LC_ALL, testlocale)
     # test data:
     bs = b('\xfc')
-    us = u'\xfc'
+    us = '\xfc'
     try:
         open(b('\xfc'))
-    except IOError, e: # in Python 3 the name for the exception instance
+    except IOError as e: # in Python 3 the name for the exception instance
         bioe = e       # is local to the except clause
     try:
-        open(u'\xfc')
-    except IOError, e:
+        open('\xfc')
+    except IOError as e:
         uioe = e
     except UnicodeEncodeError:
         try:
-            open(u'\xfc'.encode(sys.getfilesystemencoding(), 'replace'))
-        except IOError, e:
+            open('\xfc'.encode(sys.getfilesystemencoding(), 'replace'))
+        except IOError as e:
             uioe = e
     try:
         os.chdir(b('\xfc'))
-    except OSError, e:
+    except OSError as e:
         bose = e
     try:
-        os.chdir(u'\xfc')
-    except OSError, e:
+        os.chdir('\xfc')
+    except OSError as e:
         uose = e
     except UnicodeEncodeError:
         try:
-            os.chdir(u'\xfc'.encode(sys.getfilesystemencoding(), 'replace'))
-        except OSError, e:
+            os.chdir('\xfc'.encode(sys.getfilesystemencoding(), 'replace'))
+        except OSError as e:
             uose = e
     # wrapped test data:
     wbioe = SafeString(bioe)
@@ -263,10 +263,10 @@ class SafeStringTests_locale(unittest.TestCase):
     def test_ustr(self):
         """Test conversion to a unicode-string."""
         # unicode(bioe) fails with e.g. 'ru_RU.utf8' locale
-        self.assertEqual(unicode, type(unicode(self.wbioe)))
-        self.assertEqual(unicode, type(unicode(self.wuioe)))
-        self.assertEqual(unicode, type(unicode(self.wbose)))
-        self.assertEqual(unicode, type(unicode(self.wuose)))
+        self.assertEqual(str, type(str(self.wbioe)))
+        self.assertEqual(str, type(str(self.wuioe)))
+        self.assertEqual(str, type(str(self.wbose)))
+        self.assertEqual(str, type(str(self.wuose)))
 
     def test_str(self):
         """Test conversion to a string (bytes in Python 2, unicode in Python 3)."""

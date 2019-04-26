@@ -77,16 +77,16 @@ import package_unittest
 
 if __name__ == '__main__':
     suite = suite()
-    print ('Testing Docutils %s [%s] with Python %s on %s at %s'
+    print(('Testing Docutils %s [%s] with Python %s on %s at %s'
            % (docutils.__version__, docutils.__version_details__,
               sys.version.split()[0],
-              time.strftime('%Y-%m-%d'), time.strftime('%H:%M:%S')))
-    print 'Working directory: %s' % os.getcwd()
-    print 'Docutils package: %s' % os.path.dirname(docutils.__file__)
+              time.strftime('%Y-%m-%d'), time.strftime('%H:%M:%S'))))
+    print('Working directory: %s' % os.getcwd())
+    print('Docutils package: %s' % os.path.dirname(docutils.__file__))
     sys.stdout.flush()
     result = package_unittest.main(suite)
     #if package_unittest.verbosity > 1:
     #    print >>sys.stderr, pformat(suite) # check the test suite
     finish = time.time()
-    print 'Elapsed time: %.3f seconds' % (finish - start)
+    print('Elapsed time: %.3f seconds' % (finish - start))
     sys.exit(not result.wasSuccessful())

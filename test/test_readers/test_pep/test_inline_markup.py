@@ -8,7 +8,7 @@
 Tests for inline markup in PEPs (readers/pep.py).
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 
 def suite():

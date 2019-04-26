@@ -8,7 +8,7 @@
 Tests for docutils.transforms.universal.StripComments.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.parsers.rst import Parser
 from docutils.transforms.universal import StripClassesAndElements
 

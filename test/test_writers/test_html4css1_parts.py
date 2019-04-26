@@ -12,7 +12,7 @@ dictionaries (redundant), along with 'meta' and 'stylesheet' entries with
 standard values, and any entries with empty values.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils import core
 
 def suite():

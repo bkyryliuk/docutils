@@ -7,7 +7,7 @@
 
 """Tests for states.py."""
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.ParserTestSuite()
@@ -121,13 +121,13 @@ Test short underline.
         <paragraph>
             Test short underline.
 """],
-[u"""\
+["""\
 à with combining varia
 ======================
 
 Do not count combining chars in title column width.
 """,
-u"""\
+"""\
 <document source="test data">
     <section ids="a-with-combining-varia" names="a\u0300\ with\ combining\ varia">
         <title>

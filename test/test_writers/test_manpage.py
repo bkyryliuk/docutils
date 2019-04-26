@@ -8,7 +8,7 @@
 Tests for manpage writer.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 from docutils._compat import b
 

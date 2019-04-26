@@ -119,7 +119,7 @@ class StandardTestCase(unittest.TestCase):
            operator.
         """
         if not first == second:
-            raise self.failureException, (
+            raise self.failureException(
                     msg or '%s != %s' % _format_str(first, second))
 
     def assertNotEqual(self, first, second, msg=None):
@@ -127,19 +127,19 @@ class StandardTestCase(unittest.TestCase):
            operator.
         """
         if first == second:
-            raise self.failureException, (
+            raise self.failureException(
                     msg or '%s == %s' % _format_str(first, second))
 
     # assertIn and assertNotIn: new in Python 2.7:
 
     def assertIn(self, a, b, msg=None):
         if a not in b:
-            raise self.failureException, (
+            raise self.failureException(
                     msg or '%s not in %s' % _format_str(a, b))
 
     def assertNotIn(self, a, b, msg=None):
         if a in b:
-            raise self.failureException, (
+            raise self.failureException(
                     msg or '%s in %s' % _format_str(a, b))
 
     # aliases for assertion methods, deprecated since Python 2.7
@@ -208,7 +208,7 @@ class CustomTestCase(StandardTestCase):
 
     def compare_output(self, input, output, expected):
         """`input`, `output`, and `expected` should all be strings."""
-        if isinstance(input, unicode):
+        if isinstance(input, str):
             input = input.encode('raw_unicode_escape')
         if sys.version_info > (3,):
             # API difference: Python 3's node.__str__ doesn't escape
@@ -218,9 +218,9 @@ class CustomTestCase(StandardTestCase):
             if isinstance(output, bytes):
                 output = output.decode('utf-8')
         else:
-            if isinstance(expected, unicode):
+            if isinstance(expected, str):
                 expected = expected.encode('raw_unicode_escape')
-            if isinstance(output, unicode):
+            if isinstance(output, str):
                 output = output.encode('raw_unicode_escape')
         # Normalize line endings:
         if expected:
@@ -229,18 +229,18 @@ class CustomTestCase(StandardTestCase):
             output = '\n'.join(output.splitlines())
         try:
             self.assertEqual(output, expected)
-        except AssertionError, error:
-            print >>sys.stderr, '\n%s\ninput:' % (self,)
-            print >>sys.stderr, input
+        except AssertionError as error:
+            print('\n%s\ninput:' % (self,), file=sys.stderr)
+            print(input, file=sys.stderr)
             try:
                 comparison = ''.join(self.compare(expected.splitlines(1),
                                                   output.splitlines(1)))
-                print >>sys.stderr, '-: expected\n+: output'
-                print >>sys.stderr, comparison
+                print('-: expected\n+: output', file=sys.stderr)
+                print(comparison, file=sys.stderr)
             except AttributeError:      # expected or output not a string
                 # alternative output for non-strings:
-                print >>sys.stderr, 'expected: %r' % expected
-                print >>sys.stderr, 'output:   %r' % output
+                print('expected: %r' % expected, file=sys.stderr)
+                print('output:   %r' % output, file=sys.stderr)
             raise error
 
 
@@ -375,20 +375,20 @@ class TransformTestCase(CustomTestCase):
     def test_transforms_verbosely(self):
         if self.run_in_debugger:
             pdb.set_trace()
-        print '\n', self.id
-        print '-' * 70
-        print self.input
+        print('\n', self.id)
+        print('-' * 70)
+        print(self.input)
         settings = self.settings.copy()
         settings.__dict__.update(self.suite_settings)
         document = utils.new_document('test data', settings)
         self.parser.parse(self.input, document)
-        print '-' * 70
-        print document.pformat()
+        print('-' * 70)
+        print(document.pformat())
         for transformClass in self.transforms:
             transformClass(document).apply()
         output = document.pformat()
-        print '-' * 70
-        print output
+        print('-' * 70)
+        print(output)
         self.compare_output(self.input, output, self.expected)
 
 
@@ -421,7 +421,7 @@ class TransformTestSuite(CustomTestSuite):
         1 (run this test under the pdb debugger). Tests should be
         self-documenting and not require external comments.
         """
-        for name, (transforms, cases) in dict.items():
+        for name, (transforms, cases) in list(dict.items()):
             for casenum in range(len(cases)):
                 case = cases[casenum]
                 run_in_debugger = False
@@ -495,7 +495,7 @@ class ParserTestSuite(CustomTestSuite):
         disable this test) or 1 (run this test under the pdb debugger). Tests
         should be self-documenting and not require external comments.
         """
-        for name, cases in dict.items():
+        for name, cases in list(dict.items()):
             for casenum in range(len(cases)):
                 case = cases[casenum]
                 run_in_debugger = False
@@ -542,7 +542,7 @@ class GridTableParserTestCase(CustomTestCase):
             self.parser.find_head_body_sep()
             self.parser.parse_table()
             output = self.parser.cells
-        except Exception, details:
+        except Exception as details:
             output = '%s: %s' % (details.__class__.__name__, details)
         self.compare_output(self.input, pformat(output) + '\n',
                             pformat(self.expected) + '\n')
@@ -551,7 +551,7 @@ class GridTableParserTestCase(CustomTestCase):
         try:
             output = self.parser.parse(StringList(string2lines(self.input),
                                                   'test data'))
-        except Exception, details:
+        except Exception as details:
             output = '%s: %s' % (details.__class__.__name__, details)
         self.compare_output(self.input, pformat(output) + '\n',
                             pformat(self.expected) + '\n')
@@ -580,7 +580,7 @@ class GridTableParserTestSuite(CustomTestSuite):
         or 1 (run this test under the pdb debugger). Tests should be
         self-documenting and not require external comments.
         """
-        for name, cases in dict.items():
+        for name, cases in list(dict.items()):
             for casenum in range(len(cases)):
                 case = cases[casenum]
                 run_in_debugger = False
@@ -623,7 +623,7 @@ class SimpleTableParserTestSuite(CustomTestSuite):
         debugger). Tests should be self-documenting and not require external
         comments.
         """
-        for name, cases in dict.items():
+        for name, cases in list(dict.items()):
             for casenum in range(len(cases)):
                 case = cases[casenum]
                 run_in_debugger = False
@@ -684,7 +684,7 @@ class PythonModuleParserTestSuite(CustomTestSuite):
         disable this test) or 1 (run this test under the pdb debugger). Tests
         should be self-documenting and not require external comments.
         """
-        for name, cases in dict.items():
+        for name, cases in list(dict.items()):
             for casenum in range(len(cases)):
                 case = cases[casenum]
                 run_in_debugger = False
@@ -740,7 +740,7 @@ class PublishTestSuite(CustomTestSuite):
         self.writer_name = writer_name
 
     def generateTests(self, dict, dictname='totest'):
-        for name, cases in dict.items():
+        for name, cases in list(dict.items()):
             for casenum in range(len(cases)):
                 case = cases[casenum]
                 run_in_debugger = False
@@ -761,7 +761,7 @@ class PublishTestSuite(CustomTestSuite):
 class HtmlPublishPartsTestSuite(CustomTestSuite):
 
     def generateTests(self, dict, dictname='totest'):
-        for name, (settings_overrides, cases) in dict.items():
+        for name, (settings_overrides, cases) in list(dict.items()):
             settings = self.suite_settings.copy()
             settings.update(settings_overrides)
             for casenum in range(len(cases)):
@@ -841,11 +841,11 @@ class HtmlWriterPublishPartsTestCase(WriterPublishTestCase):
         parts['html_prolog'] = parts['html_prolog'].replace(
             self.standard_html_prolog, '')
         # remove empty values:
-        for key in parts.keys():
+        for key in list(parts.keys()):
             if not parts[key]:
                 del parts[key]
         # standard output format:
-        keys = parts.keys()
+        keys = list(parts.keys())
         keys.sort()
         output = []
         for key in keys:
@@ -863,7 +863,7 @@ def exception_data(func, *args, **kwds):
     """
     try:
         func(*args, **kwds)
-    except Exception, detail:
+    except Exception as detail:
         return (detail, detail.args,
                 '%s: %s' % (detail.__class__.__name__, detail))
 
@@ -890,10 +890,10 @@ def _format_str(*args):
     return_tuple = []
     for i in args:
         r = repr(i)
-        if ( (isinstance(i, bytes) or isinstance(i, unicode))
+        if ( (isinstance(i, bytes) or isinstance(i, str))
              and '\n' in i):
             stripped = ''
-            if isinstance(i, unicode) and r.startswith('u'):
+            if isinstance(i, str) and r.startswith('u'):
                 stripped = r[0]
                 r = r[1:]
             elif isinstance(i, bytes) and r.startswith('b'):

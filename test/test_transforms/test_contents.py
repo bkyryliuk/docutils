@@ -9,7 +9,7 @@ Tests for `docutils.transforms.parts.Contents` (via
 `docutils.transforms.universal.LastReaderPending`).
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.transforms.references import Substitutions
 from docutils.parsers.rst import Parser
 

@@ -8,7 +8,7 @@
 Tests for images.py image directives.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 from docutils.nodes import reprunicode
 
@@ -405,11 +405,11 @@ totest['images'] = [
             .. |img| image:: picture.png
                :align: left
 """],
-[u"""\
+["""\
 .. image:: picture.png
    :align: \xe4
 """,
-u"""\
+"""\
 <document source="test data">
     <system_message level="3" line="1" source="test data" type="ERROR">
         <paragraph>
@@ -419,7 +419,7 @@ u"""\
         <literal_block xml:space="preserve">
             .. image:: picture.png
                :align: \xe4
-""" % repr(reprunicode(u'\xe4'))],
+""" % repr(reprunicode('\xe4'))],
 ["""
 .. image:: test.png
    :target: Uppercase_

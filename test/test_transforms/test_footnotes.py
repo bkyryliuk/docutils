@@ -8,7 +8,7 @@
 Tests for docutils.transforms.references.Footnotes.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.transforms.references import Footnotes
 from docutils.parsers.rst import Parser
 
@@ -409,7 +409,7 @@ A sequence of symbol footnote references:
 .. [*] Auto-symbol footnote 11.
 .. [*] Auto-symbol footnote 12.
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         A sequence of symbol footnote references:

@@ -8,7 +8,7 @@
 Tests for docutils.transforms.universal.Messages.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.transforms.universal import Messages
 from docutils.transforms.references import Substitutions
 from docutils.parsers.rst import Parser

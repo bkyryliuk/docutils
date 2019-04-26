@@ -72,13 +72,13 @@ class SafeString(object):
     def __str__(self):
         try:
             return str(self.data)
-        except UnicodeEncodeError, err:
+        except UnicodeEncodeError as err:
             if isinstance(self.data, Exception):
                 args = [str(SafeString(arg, self.encoding,
                                         self.encoding_errors))
                         for arg in self.data.args]
                 return ', '.join(args)
-            if isinstance(self.data, unicode):
+            if isinstance(self.data, str):
                 if sys.version_info > (3,0):
                     return self.data
                 else:
@@ -99,24 +99,24 @@ class SafeString(object):
         * else decode with `self.encoding` and `self.decoding_errors`.
         """
         try:
-            u = unicode(self.data)
+            u = str(self.data)
             if isinstance(self.data, EnvironmentError):
                 u = u.replace(": u'", ": '") # normalize filename quoting
             return u
-        except UnicodeError, error: # catch ..Encode.. and ..Decode.. errors
+        except UnicodeError as error: # catch ..Encode.. and ..Decode.. errors
             if isinstance(self.data, EnvironmentError):
-                return  u"[Errno %s] %s: '%s'" % (self.data.errno,
+                return  "[Errno %s] %s: '%s'" % (self.data.errno,
                     SafeString(self.data.strerror, self.encoding,
                                self.decoding_errors),
                     SafeString(self.data.filename, self.encoding,
                                self.decoding_errors))
             if isinstance(self.data, Exception):
-                args = [unicode(SafeString(arg, self.encoding,
+                args = [str(SafeString(arg, self.encoding,
                             decoding_errors=self.decoding_errors))
                         for arg in self.data.args]
-                return u', '.join(args)
+                return ', '.join(args)
             if isinstance(error, UnicodeDecodeError):
-                return unicode(self.data, self.encoding, self.decoding_errors)
+                return str(self.data, self.encoding, self.decoding_errors)
             raise
 
 class ErrorString(SafeString):
@@ -128,7 +128,7 @@ class ErrorString(SafeString):
                             super(ErrorString, self).__str__())
 
     def __unicode__(self):
-        return u'%s: %s' % (self.data.__class__.__name__,
+        return '%s: %s' % (self.data.__class__.__name__,
                             super(ErrorString, self).__unicode__())
 
 
@@ -158,7 +158,7 @@ class ErrorOutput(object):
         # if `stream` is a file name, open it
         elif isinstance(stream, str):
             stream = open(stream, 'w')
-        elif isinstance(stream, unicode):
+        elif isinstance(stream, str):
             stream = open(stream.encode(sys.getfilesystemencoding()), 'w')
 
         self.stream = stream
@@ -183,7 +183,7 @@ class ErrorOutput(object):
         if self.stream is False:
             return
         if isinstance(data, Exception):
-            data = unicode(SafeString(data, self.encoding,
+            data = str(SafeString(data, self.encoding,
                                   self.encoding_errors, self.decoding_errors))
         try:
             self.stream.write(data)
@@ -193,7 +193,7 @@ class ErrorOutput(object):
             if self.stream in (sys.stderr, sys.stdout):
                 self.stream.buffer.write(data) # write bytes to raw stream
             else:
-                self.stream.write(unicode(data, self.encoding,
+                self.stream.write(str(data, self.encoding,
                                           self.decoding_errors))
 
     def close(self):

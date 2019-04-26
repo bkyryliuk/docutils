@@ -38,45 +38,45 @@ class ConfigFileTests(unittest.TestCase):
                     'error': fixpath('data/config_error_handler.txt')}
 
     settings = {
-        'old': {u'datestamp': u'%Y-%m-%d %H:%M UTC',
-                u'generator': True,
-                u'no_random': True,
-                u'python_home': u'http://www.python.org',
-                u'source_link': True,
+        'old': {'datestamp': '%Y-%m-%d %H:%M UTC',
+                'generator': True,
+                'no_random': True,
+                'python_home': 'http://www.python.org',
+                'source_link': True,
                 'stylesheet': None,
-                u'stylesheet_path': [u'stylesheets/pep.css'],
-                'template': fixpath(u'data/pep-html-template')},
-        'one': {u'datestamp': u'%Y-%m-%d %H:%M UTC',
-                u'generator': True,
-                u'no_random': True,
-                u'python_home': u'http://www.python.org',
-                u'raw_enabled': False,
+                'stylesheet_path': ['stylesheets/pep.css'],
+                'template': fixpath('data/pep-html-template')},
+        'one': {'datestamp': '%Y-%m-%d %H:%M UTC',
+                'generator': True,
+                'no_random': True,
+                'python_home': 'http://www.python.org',
+                'raw_enabled': False,
                 'record_dependencies': utils.DependencyList(),
-                u'source_link': True,
+                'source_link': True,
                 'stylesheet': None,
-                u'stylesheet_path': [u'stylesheets/pep.css'],
-                u'tab_width': 8,
-                u'template': fixpath(u'data/pep-html-template'),
-                u'trim_footnote_reference_space': True,
+                'stylesheet_path': ['stylesheets/pep.css'],
+                'tab_width': 8,
+                'template': fixpath('data/pep-html-template'),
+                'trim_footnote_reference_space': True,
                },
-        'two': {u'footnote_references': u'superscript',
-                u'generator': False,
+        'two': {'footnote_references': 'superscript',
+                'generator': False,
                 'record_dependencies': utils.DependencyList(),
-                u'stylesheet': None,
-                u'stylesheet_path': [u'test.css'],
+                'stylesheet': None,
+                'stylesheet_path': ['test.css'],
                 'trim_footnote_reference_space': None},
-        'list': {u'expose_internals': [u'a', u'b', u'c', u'd', u'e'],
-                 u'strip_classes': [u'spam', u'pan', u'fun', u'parrot'],
-                 u'strip_elements_with_classes': [u'sugar', u'flour', u'milk',
-                                                  u'safran']},
-        'list2': {u'expose_internals': [u'a', u'b', u'c', u'd', u'e', u'f'],
-                  u'strip_classes': [u'spam', u'pan', u'fun', u'parrot',
-                                     u'ham', u'eggs'],
-                  u'strip_elements_with_classes': [u'sugar', u'flour',
-                                                   u'milk', u'safran',
-                                                   u'eggs', u'salt']},
-        'error': {u'error_encoding': u'ascii',
-                  u'error_encoding_error_handler': u'strict'},
+        'list': {'expose_internals': ['a', 'b', 'c', 'd', 'e'],
+                 'strip_classes': ['spam', 'pan', 'fun', 'parrot'],
+                 'strip_elements_with_classes': ['sugar', 'flour', 'milk',
+                                                  'safran']},
+        'list2': {'expose_internals': ['a', 'b', 'c', 'd', 'e', 'f'],
+                  'strip_classes': ['spam', 'pan', 'fun', 'parrot',
+                                     'ham', 'eggs'],
+                  'strip_elements_with_classes': ['sugar', 'flour',
+                                                   'milk', 'safran',
+                                                   'eggs', 'salt']},
+        'error': {'error_encoding': 'ascii',
+                  'error_encoding_error_handler': 'strict'},
         }
 
     compare = difflib.Differ().compare
@@ -110,10 +110,10 @@ class ConfigFileTests(unittest.TestCase):
         try:
             self.assertEqual(result, expected)
         except AssertionError:
-            print >>sys.stderr, '\n%s\n' % (self,)
-            print >>sys.stderr, '-: expected\n+: result'
-            print >>sys.stderr, ''.join(self.compare(expected.splitlines(1),
-                                                     result.splitlines(1)))
+            print('\n%s\n' % (self,), file=sys.stderr)
+            print('-: expected\n+: result', file=sys.stderr)
+            print(''.join(self.compare(expected.splitlines(1),
+                                                     result.splitlines(1))), file=sys.stderr)
             raise
 
     def test_nofiles(self):
@@ -173,16 +173,16 @@ class ConfigEnvVarFileTests(ConfigFileTests):
 
 class HelperFunctionsTests(unittest.TestCase):
 
-    pathdict = {'foo': 'hallo', 'ham': u'h\xE4m', 'spam': u'spam'}
+    pathdict = {'foo': 'hallo', 'ham': 'h\xE4m', 'spam': 'spam'}
     keys = ['foo', 'ham']
 
     def test_make_paths_absolute(self):
         pathdict = self.pathdict.copy()
         frontend.make_paths_absolute(pathdict, self.keys, base_path='base')
         self.assertEqual(pathdict['foo'], os.path.abspath('base/hallo'))
-        self.assertEqual(pathdict['ham'], os.path.abspath(u'base/h\xE4m'))
+        self.assertEqual(pathdict['ham'], os.path.abspath('base/h\xE4m'))
         # not touched, because key not in keys:
-        self.assertEqual(pathdict['spam'], u'spam')
+        self.assertEqual(pathdict['spam'], 'spam')
 
     def test_make_paths_absolute_cwd(self):
         # With base_path None, the cwd is used as base path.
@@ -190,19 +190,19 @@ class HelperFunctionsTests(unittest.TestCase):
         # os.getcwdu() is used and the converted path is a unicode instance:
         pathdict = self.pathdict.copy()
         frontend.make_paths_absolute(pathdict, self.keys)
-        self.assertEqual(pathdict['foo'], os.path.abspath(u'hallo'))
-        self.assertEqual(pathdict['ham'], os.path.abspath(u'h\xE4m'))
+        self.assertEqual(pathdict['foo'], os.path.abspath('hallo'))
+        self.assertEqual(pathdict['ham'], os.path.abspath('h\xE4m'))
         # not touched, because key not in keys:
-        self.assertEqual(pathdict['spam'], u'spam')
+        self.assertEqual(pathdict['spam'], 'spam')
 
     def test_validate_colon_separated_string_list(self):
         tests = (
-                    (u'a', ['a',] ),
                     ('a', ['a',] ),
-                    (u'a:b', ['a', 'b'] ),
+                    ('a', ['a',] ),
                     ('a:b', ['a', 'b'] ),
-                    ([u'a',], ['a',] ),
-                    ([u'a', u'b:c'], ['a', 'b', 'c'] ),
+                    ('a:b', ['a', 'b'] ),
+                    (['a',], ['a',] ),
+                    (['a', 'b:c'], ['a', 'b', 'c'] ),
                 )
         for t in tests:
             self.assertEqual(
@@ -212,12 +212,12 @@ class HelperFunctionsTests(unittest.TestCase):
 
     def test_validate_comma_separated_list(self):
         tests = (
-                    (u'a', ['a',] ),
                     ('a', ['a',] ),
-                    (u'a,b', ['a', 'b'] ),
+                    ('a', ['a',] ),
                     ('a,b', ['a', 'b'] ),
-                    ([u'a',], ['a',] ),
-                    ([u'a', u'b,c'], ['a', 'b', 'c'] ),
+                    ('a,b', ['a', 'b'] ),
+                    (['a',], ['a',] ),
+                    (['a', 'b,c'], ['a', 'b', 'c'] ),
                     (['a', 'b,c'], ['a', 'b', 'c'] ),
                 )
         for t in tests:

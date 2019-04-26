@@ -10,7 +10,7 @@
 Miscellaneous HTML writer tests.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils import core
 from docutils._compat import b
 import os
@@ -25,7 +25,7 @@ class EncodingTestCase(DocutilsTestSupport.StandardTestCase):
             'stylesheet': '',
             '_disable_config': True,}
         result = core.publish_string(
-            u'EUR = \u20ac', writer_name='html4css1',
+            'EUR = \u20ac', writer_name='html4css1',
             settings_overrides=settings_overrides)
         # Encoding a euro sign with latin1 doesn't work, so the
         # xmlcharrefreplace handler is used.
@@ -145,7 +145,7 @@ class MathTestCase(DocutilsTestSupport.StandardTestCase):
                       'embed_stylesheet': False}
         styles = core.publish_parts(self.data, writer_name='html4css1',
             settings_overrides=mysettings)['stylesheet']
-        self.assertEqual(u"""\
+        self.assertEqual("""\
 <link rel="stylesheet" href="functional/input/data/html4css1.css" type="text/css" />
 <link rel="stylesheet" href="functional/input/data/math.css" type="text/css" />
 <link rel="stylesheet" href="custom/style.css" type="text/css" />

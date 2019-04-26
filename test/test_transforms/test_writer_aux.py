@@ -8,7 +8,7 @@
 Test module for writer_aux transforms.
 """
 
-from __init__ import DocutilsTestSupport # must be imported before docutils
+from .__init__ import DocutilsTestSupport # must be imported before docutils
 from docutils.transforms import writer_aux
 from docutils.parsers.rst import Parser
 

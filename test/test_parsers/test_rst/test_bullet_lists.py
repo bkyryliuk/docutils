@@ -8,7 +8,7 @@
 Tests for states.py.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.ParserTestSuite()
@@ -172,7 +172,7 @@ empty item above, no blank line
     <paragraph>
         empty item above, no blank line
 """],
-[u"""\
+["""\
 Unicode bullets:
 
 \u2022 BULLET
@@ -181,7 +181,7 @@ Unicode bullets:
 
 \u2043 HYPHEN BULLET
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Unicode bullets:

@@ -8,7 +8,7 @@
 Tests for interpreted text in docutils/parsers/rst/states.py.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.utils.code_analyzer import with_pygments
 
 def suite():

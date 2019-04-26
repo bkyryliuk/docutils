@@ -133,7 +133,7 @@ class CharacterEntitySetExtractor:
         if not set:
             return
         if set not in self.sets:
-            print('bad set: %r' % set)
+            print(('bad set: %r' % set))
             return
         entity = attributes['id']
         assert (entity not in self.sets[set]
@@ -173,10 +173,10 @@ class CharacterEntitySetExtractor:
         else:
             outname = set_name + '.txt'
         outfile = open(outname, 'w')
-        print('writing file "%s"' % outname)
+        print(('writing file "%s"' % outname))
         outfile.write(self.header + '\n')
         set = self.sets[set_name]
-        entities = [(e.lower(), e) for e in set.keys()]
+        entities = [(e.lower(), e) for e in list(set.keys())]
         entities.sort()
         longest = 0
         for _, entity_name in entities:

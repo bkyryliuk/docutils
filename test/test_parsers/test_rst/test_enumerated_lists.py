@@ -8,7 +8,7 @@
 Tests for states.py.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.ParserTestSuite()
@@ -648,7 +648,7 @@ Nested enumerated lists:
             <paragraph>
                 Item 3.
 """],
-[u"""\
+["""\
 A. Einstein was a great influence on
 B. Physicist, who was a colleague of
 C. Chemist.  They all worked in

@@ -20,7 +20,7 @@ import os
 import os.path
 import time
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 try: # check for the Python Imaging Library
     import PIL.Image
 except ImportError:
@@ -180,7 +180,7 @@ class Writer(writers.Writer):
 
     def apply_template(self):
         template_file = open(self.document.settings.template, 'rb')
-        template = unicode(template_file.read(), 'utf-8')
+        template = str(template_file.read(), 'utf-8')
         template_file.close()
         subs = self.interpolation_dict()
         return template % subs
@@ -337,15 +337,15 @@ class HTMLTranslator(nodes.NodeVisitor):
     def encode(self, text):
         """Encode special characters in `text` & return."""
         # @@@ A codec to do these and all other HTML entities would be nice.
-        text = unicode(text)
+        text = str(text)
         return text.translate({
-            ord('&'): u'&amp;',
-            ord('<'): u'&lt;',
-            ord('"'): u'&quot;',
-            ord('>'): u'&gt;',
-            ord('@'): u'&#64;', # may thwart some address harvesters
+            ord('&'): '&amp;',
+            ord('<'): '&lt;',
+            ord('"'): '&quot;',
+            ord('>'): '&gt;',
+            ord('@'): '&#64;', # may thwart some address harvesters
             # TODO: convert non-breaking space only if needed?
-            0xa0: u'&nbsp;'}) # non-breaking space
+            0xa0: '&nbsp;'}) # non-breaking space
 
     def cloak_mailto(self, uri):
         """Try to hide a mailto: URL from harvesters."""
@@ -379,8 +379,8 @@ class HTMLTranslator(nodes.NodeVisitor):
                 content = io.FileInput(source_path=path,
                                        encoding='utf-8').read()
                 self.settings.record_dependencies.add(path)
-            except IOError, err:
-                msg = u"Cannot embed stylesheet '%s': %s." % (
+            except IOError as err:
+                msg = "Cannot embed stylesheet '%s': %s." % (
                                 path, SafeString(err.strerror))
                 self.document.reporter.error(msg)
                 return '<--- %s --->\n' % msg
@@ -400,7 +400,7 @@ class HTMLTranslator(nodes.NodeVisitor):
         prefix = []
         atts = {}
         ids = []
-        for (name, value) in attributes.items():
+        for (name, value) in list(attributes.items()):
             atts[name.lower()] = value
         classes = []
         languages = []
@@ -435,7 +435,7 @@ class HTMLTranslator(nodes.NodeVisitor):
                     # Non-empty tag.  Place the auxiliary <span> tag
                     # *inside* the element, as the first child.
                     suffix += '<span id="%s"></span>' % id
-        attlist = atts.items()
+        attlist = list(atts.items())
         attlist.sort()
         parts = [tagname]
         for name, value in attlist:
@@ -443,12 +443,12 @@ class HTMLTranslator(nodes.NodeVisitor):
             # value, but this isn't supported by XHTML.
             assert value is not None
             if isinstance(value, list):
-                values = [unicode(v) for v in value]
+                values = [str(v) for v in value]
                 parts.append('%s="%s"' % (name.lower(),
                                           self.attval(' '.join(values))))
             else:
                 parts.append('%s="%s"' % (name.lower(),
-                                          self.attval(unicode(value))))
+                                          self.attval(str(value))))
         if empty:
             infix = ' /'
         else:
@@ -1037,7 +1037,7 @@ class HTMLTranslator(nodes.NodeVisitor):
         if 'scale' in node:
             if (PIL and not ('width' in node and 'height' in node)
                 and self.settings.file_insertion_enabled):
-                imagepath = urllib.url2pathname(uri)
+                imagepath = urllib.request.url2pathname(uri)
                 try:
                     img = PIL.Image.open(
                             imagepath.encode(sys.getfilesystemencoding()))
@@ -1195,8 +1195,8 @@ class HTMLTranslator(nodes.NodeVisitor):
         # LaTeX container
         wrappers = {# math_mode: (inline, block)
                     'mathml':  (None,     None),
-                    'html':    ('$%s$',   u'\\begin{%s}\n%s\n\\end{%s}'),
-                    'mathjax': ('\(%s\)', u'\\begin{%s}\n%s\n\\end{%s}'),
+                    'html':    ('$%s$',   '\\begin{%s}\n%s\n\\end{%s}'),
+                    'mathjax': ('\(%s\)', '\\begin{%s}\n%s\n\\end{%s}'),
                     'latex':   (None,     None),
                    }
         wrapper = wrappers[self.math_output][math_env != '']
@@ -1227,11 +1227,11 @@ class HTMLTranslator(nodes.NodeVisitor):
             try:
                 mathml_tree = parse_latex_math(math_code, inline=not(math_env))
                 math_code = ''.join(mathml_tree.xml())
-            except SyntaxError, err:
+            except SyntaxError as err:
                 err_node = self.document.reporter.error(err, base_node=node)
                 self.visit_system_message(err_node)
                 self.body.append(self.starttag(node, 'p'))
-                self.body.append(u','.join(err.args))
+                self.body.append(','.join(err.args))
                 self.body.append('</p>\n')
                 self.body.append(self.starttag(node, 'pre',
                                                CLASS='literal-block'))

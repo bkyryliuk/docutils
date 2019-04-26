@@ -9,7 +9,7 @@ Tests for misc.py "replace" directive.
 Test in french (not default/fallback language).
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 
 def suite():

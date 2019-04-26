@@ -54,8 +54,8 @@ def prepstyle(filename):
 def main():
     args = sys.argv[1:]
     if len(args) != 1:
-        print >> sys.stderr, __doc__
-        print >> sys.stderr, "Usage: %s STYLE_FILE.odt\n" % sys.argv[0]
+        print(__doc__, file=sys.stderr)
+        print("Usage: %s STYLE_FILE.odt\n" % sys.argv[0], file=sys.stderr)
         sys.exit(1)
     filename = args[0]
     prepstyle(filename)

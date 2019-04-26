@@ -63,7 +63,7 @@ def usage():
             sys.stdout.write('%-16s' % '\n')
         while len(description) > 60:
             limit = description.rindex(' ', 0, 60)
-            print(description[:limit].strip())
+            print((description[:limit].strip()))
             description = description[limit + 1:]
             sys.stdout.write('%-15s' % ' ')
         print(description)

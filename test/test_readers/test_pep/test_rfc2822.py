@@ -8,7 +8,7 @@
 Tests for RFC-2822 headers in PEPs (readers/pep.py).
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.PEPParserTestSuite()

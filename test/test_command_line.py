@@ -34,13 +34,13 @@ class CommandLineEncodingTests(unittest.TestCase):
             return
         sys.argv.append('--source-url=test.txt') # pure ASCII argument
         if sys.version_info < (3,0):
-            sys.argv.append(u'--title=Dornröschen'.encode(argv_encoding))
+            sys.argv.append('--title=Dornröschen'.encode(argv_encoding))
         else:
-            sys.argv.append(u'--title=Dornröschen')
+            sys.argv.append('--title=Dornröschen')
         publisher = docutils.core.Publisher()
         publisher.process_command_line()
         self.assertEqual(publisher.settings.source_url, 'test.txt')
-        self.assertEqual(publisher.settings.title, u'Dornröschen')
+        self.assertEqual(publisher.settings.title, 'Dornröschen')
         sys.argv.pop() # --title
         sys.argv.pop() # --source-url
 

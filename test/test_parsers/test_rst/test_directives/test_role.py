@@ -8,7 +8,7 @@
 Tests for misc.py "role" directive.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 
 def suite():

@@ -8,7 +8,7 @@
 Tests for docutils.transforms.peps.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.transforms.peps import TargetNotes
 from docutils.parsers.rst import Parser
 

@@ -367,9 +367,9 @@ class smartchars(object):
     """Smart quotes and dashes
     """
 
-    endash   = u'–' # "&#8211;" EN DASH
-    emdash   = u'—' # "&#8212;" EM DASH
-    ellipsis = u'…' # "&#8230;" HORIZONTAL ELLIPSIS
+    endash   = '–' # "&#8211;" EN DASH
+    emdash   = '—' # "&#8212;" EM DASH
+    ellipsis = '…' # "&#8230;" HORIZONTAL ELLIPSIS
 
     # quote characters (language-specific, set in __init__())
     #
@@ -382,56 +382,56 @@ class smartchars(object):
     # For other languages see:
     # http://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks
     # http://de.wikipedia.org/wiki/Anf%C3%BChrungszeichen#Andere_Sprachen
-    quotes = {'af':           u'“”‘’',
-              'af-x-altquot': u'„”‚’',
-              'ca':           u'«»“”',
-              'ca-x-altquot': u'“”‘’',
-              'cs':           u'„“‚‘',
-              'cs-x-altquot': u'»«›‹',
-              'da':           u'»«‘’',
-              'da-x-altquot': u'„“‚‘',
-              'de':           u'„“‚‘',
-              'de-x-altquot': u'»«›‹',
-              'de-CH':        u'«»‹›',
-              'el':           u'«»“”',
-              'en':           u'“”‘’',
-              'en-UK':        u'‘’“”',
-              'eo':           u'“”‘’',
-              'es':           u'«»“”',
-              'et':           u'„“‚‘', # no secondary quote listed in
-              'et-x-altquot': u'»«›‹', # the sources above (wikipedia.org)
-              'eu':           u'«»‹›',
-              'es-x-altquot': u'“”‘’',
-              'fi':           u'””’’',
-              'fi-x-altquot': u'»»’’',
-              'fr':           (u'« ',  u' »', u'‹ ', u' ›'), # with narrow no-break space
-              'fr-x-altquot': u'«»‹›', # for use with manually set spaces
+    quotes = {'af':           '“”‘’',
+              'af-x-altquot': '„”‚’',
+              'ca':           '«»“”',
+              'ca-x-altquot': '“”‘’',
+              'cs':           '„“‚‘',
+              'cs-x-altquot': '»«›‹',
+              'da':           '»«‘’',
+              'da-x-altquot': '„“‚‘',
+              'de':           '„“‚‘',
+              'de-x-altquot': '»«›‹',
+              'de-CH':        '«»‹›',
+              'el':           '«»“”',
+              'en':           '“”‘’',
+              'en-UK':        '‘’“”',
+              'eo':           '“”‘’',
+              'es':           '«»“”',
+              'et':           '„“‚‘', # no secondary quote listed in
+              'et-x-altquot': '»«›‹', # the sources above (wikipedia.org)
+              'eu':           '«»‹›',
+              'es-x-altquot': '“”‘’',
+              'fi':           '””’’',
+              'fi-x-altquot': '»»’’',
+              'fr':           ('« ',  ' »', '‹ ', ' ›'), # with narrow no-break space
+              'fr-x-altquot': '«»‹›', # for use with manually set spaces
               # 'fr-x-altquot': (u'“ ',  u' ”', u'‘ ', u' ’'), # rarely used
-              'fr-CH':        u'«»‹›',
-              'gl':           u'«»“”',
-              'he':           u'”“»«',
-              'he-x-altquot': u'„”‚’',
-              'it':           u'«»“”',
-              'it-CH':        u'«»‹›',
-              'it-x-altquot': u'“”‘’',
-              'ja':           u'「」『』',
-              'lt':           u'„“‚‘',
-              'nl':           u'“”‘’',
-              'nl-x-altquot': u'„”‚’',
-              'pl':           u'„”«»',
-              'pl-x-altquot': u'«»“”',
-              'pt':           u'«»“”',
-              'pt-BR':        u'“”‘’',
-              'ro':           u'„”«»',
-              'ro-x-altquot': u'«»„”',
-              'ru':           u'«»„“',
-              'sk':           u'„“‚‘',
-              'sk-x-altquot': u'»«›‹',
-              'sv':           u'„“‚‘',
-              'sv-x-altquot': u'»«›‹',
-              'zh-CN':        u'“”‘’',
-              'it':           u'«»“”',
-              'zh-TW':        u'「」『』',
+              'fr-CH':        '«»‹›',
+              'gl':           '«»“”',
+              'he':           '”“»«',
+              'he-x-altquot': '„”‚’',
+              'it':           '«»“”',
+              'it-CH':        '«»‹›',
+              'it-x-altquot': '“”‘’',
+              'ja':           '「」『』',
+              'lt':           '„“‚‘',
+              'nl':           '“”‘’',
+              'nl-x-altquot': '„”‚’',
+              'pl':           '„”«»',
+              'pl-x-altquot': '«»“”',
+              'pt':           '«»“”',
+              'pt-BR':        '“”‘’',
+              'ro':           '„”«»',
+              'ro-x-altquot': '«»„”',
+              'ru':           '«»„“',
+              'sk':           '„“‚‘',
+              'sk-x-altquot': '»«›‹',
+              'sv':           '„“‚‘',
+              'sv-x-altquot': '»«›‹',
+              'zh-CN':        '“”‘’',
+              'it':           '«»“”',
+              'zh-TW':        '「」『』',
              }
 
     def __init__(self, language='en'):
@@ -440,7 +440,7 @@ class smartchars(object):
             (self.opquote, self.cpquote,
              self.osquote, self.csquote) = self.quotes[language]
         except KeyError:
-            self.opquote, self.cpquote, self.osquote, self.csquote = u'""\'\''
+            self.opquote, self.cpquote, self.osquote, self.csquote = '""\'\''
 
 
 def smartyPants(text, attr=default_smartypants_attr, language='en'):
@@ -865,7 +865,7 @@ if __name__ == "__main__":
     from docutils.core import publish_string
     docstring_html = publish_string(__doc__, writer_name='html')
 
-    print docstring_html
+    print(docstring_html)
 
 
     # Unit test output goes out stderr.
@@ -876,20 +876,20 @@ if __name__ == "__main__":
         # the default attribute is "1", which means "all".
 
         def test_dates(self):
-            self.assertEqual(sp("1440-80's"), u"1440-80’s")
-            self.assertEqual(sp("1440-'80s"), u"1440-‘80s")
-            self.assertEqual(sp("1440---'80s"), u"1440–‘80s")
+            self.assertEqual(sp("1440-80's"), "1440-80’s")
+            self.assertEqual(sp("1440-'80s"), "1440-‘80s")
+            self.assertEqual(sp("1440---'80s"), "1440–‘80s")
             self.assertEqual(sp("1960s"), "1960s")  # no effect.
-            self.assertEqual(sp("1960's"), u"1960’s")
-            self.assertEqual(sp("one two '60s"), u"one two ‘60s")
-            self.assertEqual(sp("'60s"), u"‘60s")
+            self.assertEqual(sp("1960's"), "1960’s")
+            self.assertEqual(sp("one two '60s"), "one two ‘60s")
+            self.assertEqual(sp("'60s"), "‘60s")
 
         def test_ordinal_numbers(self):
             self.assertEqual(sp("21st century"), "21st century")  # no effect.
             self.assertEqual(sp("3rd"), "3rd")  # no effect.
 
         def test_educated_quotes(self):
-            self.assertEqual(sp('''"Isn't this fun?"'''), u'“Isn’t this fun?”')
+            self.assertEqual(sp('''"Isn't this fun?"'''), '“Isn’t this fun?”')
 
         def test_html_tags(self):
             text = '<a src="foo">more</a>'

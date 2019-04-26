@@ -8,7 +8,7 @@
 Tests for tables.py directives.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 import os, sys
 import csv
@@ -26,7 +26,7 @@ utf_16_csv_rel = DocutilsTestSupport.utils.relative_path(None, utf_16_csv)
 empty_txt = os.path.join(mydir, 'empty.txt')
 
 unichr_exception = DocutilsTestSupport.exception_data(
-    unichr, int("9999999999999", 16))[0]
+    chr, int("9999999999999", 16))[0]
 if isinstance(unichr_exception, OverflowError):
     unichr_exception_string = 'code too large (%s)' % unichr_exception
 else:
@@ -44,10 +44,10 @@ if sys.version_info < (3,3,2):
 def null_bytes():
     import csv
     csv_data = open(utf_16_csv, 'rb').read()
-    csv_data = unicode(csv_data, 'latin1').splitlines()
+    csv_data = str(csv_data, 'latin1').splitlines()
     reader = csv.reader([tables.CSVTable.encode_for_csv(line + '\n')
                          for line in csv_data])
-    reader.next()
+    next(reader)
 
 null_bytes_exception = DocutilsTestSupport.exception_data(null_bytes)[0]
 
@@ -430,12 +430,12 @@ totest['csv-table'] = [
                     <entry>
                     <entry>
 """],
-[u"""\
+["""\
 .. csv-table:: non-ASCII characters
 
    Heiz\xf6lr\xfccksto\xdfabd\xe4mpfung
 """,
-u"""\
+"""\
 <document source="test data">
     <table>
         <title>
@@ -819,7 +819,7 @@ u"""\
    :encoding: utf-16
    :header-rows: 1
 """ % utf_16_csv,
-u"""\
+"""\
 <document source="test data">
     <table>
         <title>

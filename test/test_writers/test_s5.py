@@ -11,7 +11,7 @@ Tests for the S5/HTML writer.
 import os
 import platform
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 
 def suite():

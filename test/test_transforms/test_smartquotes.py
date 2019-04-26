@@ -18,7 +18,7 @@ Test module for universal.SmartQuotes transform.
 """
 
 
-from __init__ import DocutilsTestSupport # must be imported before docutils
+from .__init__ import DocutilsTestSupport # must be imported before docutils
 from docutils.transforms.universal import SmartQuotes
 from docutils.parsers.rst import Parser
 
@@ -45,7 +45,7 @@ Test "smart quotes", 'single smart quotes',
 "'nested' smart" quotes
 -- and ---also long--- dashes.
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Test “smart quotes”, ‘single smart quotes’,
@@ -69,7 +69,7 @@ Keep quotes straight in code and math:
    f'(x) = df(x)/dx
 
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Do not “educate” quotes 
@@ -102,7 +102,7 @@ Quotes and inline-elements:
 Do not drop characters from intra-word inline markup like
 *re*\ ``Structured``\ *Text*.
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Quotes and inline-elements:
@@ -154,7 +154,7 @@ German "smart quotes" and 'single smart quotes'.
 
 Alternative German "smart quotes" and 'single smart quotes'.
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph classes="language-de">
         German „smart quotes“ and ‚single smart quotes‘.
@@ -176,7 +176,7 @@ German "smart quotes" and 'single smart quotes'.
 
 English "smart quotes" and 'single smart quotes'.
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         German „smart quotes“ and ‚single smart quotes‘.
@@ -197,7 +197,7 @@ English "smart quotes" and 'single smart quotes' have no alternative.
 
 Alternative Romanian "smart quotes" and 'single' smart quotes.
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Alternative German »smart quotes« and ›single smart quotes‹.

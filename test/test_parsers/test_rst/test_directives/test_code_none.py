@@ -8,7 +8,7 @@
 Test the 'code' directive in body.py with syntax_highlight = 'none'.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.ParserTestSuite(suite_settings={'syntax_highlight':'none'})

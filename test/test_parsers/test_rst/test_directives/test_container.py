@@ -8,7 +8,7 @@
 Tests for the 'container' directive from body.py.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.ParserTestSuite()

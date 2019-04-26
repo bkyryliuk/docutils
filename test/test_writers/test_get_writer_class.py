@@ -9,7 +9,7 @@
 test get_writer_class
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.writers import get_writer_class
 
 class GetWriterClassTestCase(DocutilsTestSupport.StandardTestCase):

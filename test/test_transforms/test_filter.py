@@ -8,7 +8,7 @@
 Tests for docutils.transforms.components.Filter.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.parsers.rst import Parser
 
 

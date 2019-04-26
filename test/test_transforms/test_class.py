@@ -8,7 +8,7 @@
 Tests for `docutils.transforms.misc.ClassAttribute`.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.parsers.rst import Parser
 
 

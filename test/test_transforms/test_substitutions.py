@@ -8,7 +8,7 @@
 Tests for docutils.transforms.references.Substitutions.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.transforms.references import Substitutions
 from docutils.parsers.rst import Parser
 
@@ -50,7 +50,7 @@ Here's an |unknown| substitution.
         <paragraph>
             Undefined substitution referenced: "unknown".
 """],
-[u"""\
+["""\
 Substitutions support case differences:
 
 .. |eacute| replace:: \u00E9
@@ -58,7 +58,7 @@ Substitutions support case differences:
 
 |Eacute|\\t\\ |eacute|, and even |EACUTE|.
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Substitutions support case differences:
@@ -74,7 +74,7 @@ u"""\
         \u00C9
         .
 """],
-[u"""\
+["""\
 Indirect substitution definitions with multiple references:
 
 |substitute| my coke for gin
@@ -84,7 +84,7 @@ at least I'll get my washing done
 .. |substitute| replace:: |replace|
 .. |replace| replace:: swap
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Indirect substitution definitions with multiple references:
@@ -110,7 +110,7 @@ Regular expression |.| will match any character
 
 .. Note:: Note that |.| matches *exactly* one character
 """,
-u"""\
+"""\
 <document source="test data">
     <substitution_definition names="l">
         \xab
@@ -240,7 +240,7 @@ space (|nbsp|), a backwards-not-equals (|bne|), and a captial omega (|Omega|).
 .. |bne| unicode:: U0003D U020E5
 .. |Omega| unicode:: U+003A9
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Insert an em-dash (
@@ -277,7 +277,7 @@ Copyright |copy| 2003, |BogusMegaCorp (TM)|.
 .. |BogusMegaCorp (TM)| unicode:: BogusMegaCorp U+2122
    .. with trademark sign
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Testing comments and extra text.
@@ -305,7 +305,7 @@ Some substitutions |TM| only need |rarrow| trimming on one side.
 .. |rarrow| unicode:: U+2192
    :rtrim:
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Insert an em-dash

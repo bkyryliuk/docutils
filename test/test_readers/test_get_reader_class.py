@@ -9,7 +9,7 @@
 test get_reader_class
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.readers import get_reader_class
 
 class GetReaderClassTestCase(DocutilsTestSupport.StandardTestCase):

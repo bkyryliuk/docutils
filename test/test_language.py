@@ -49,7 +49,7 @@ class LanguageTestSuite(DocutilsTestSupport.CustomTestSuite):
             match = self.language_module_pattern.match(mod)
             if match:
                 languages[match.group(1)] = 1
-        self.languages = languages.keys()
+        self.languages = list(languages.keys())
         # test language tag normalization:
         self.languages += ['en_gb', 'en_US', 'en-CA', 'de-DE', 'de-AT-1901',
                            'pt-BR', 'pt-foo-BR']
@@ -86,10 +86,10 @@ class LanguageTestCase(DocutilsTestSupport.CustomTestCase):
         """
         missing  = []   # in ref but not in l.
         too_much = []   # in l but not in ref.
-        for label in ref_dict.keys():
+        for label in list(ref_dict.keys()):
             if label not in l_dict:
                 missing.append(label)
-        for label in l_dict.keys():
+        for label in list(l_dict.keys()):
             if label not in ref_dict:
                 too_much.append(label)
         return (missing, too_much)
@@ -97,7 +97,7 @@ class LanguageTestCase(DocutilsTestSupport.CustomTestCase):
     def _invert(self, adict):
         """Return an inverted (keys & values swapped) dictionary."""
         inverted = {}
-        for key, value in adict.items():
+        for key, value in list(adict.items()):
             inverted[value] = key
         return inverted
 
@@ -139,15 +139,15 @@ class LanguageTestCase(DocutilsTestSupport.CustomTestCase):
             self.fail('No docutils.parsers.rst.languages.%s module.'
                       % self.language)
         failures = []
-        for d in module.directives.keys():
+        for d in list(module.directives.keys()):
             try:
                 func, msg = directives.directive(d, module, None)
                 if not func:
                     failures.append('"%s": unknown directive' % d)
-            except Exception, error:
+            except Exception as error:
                 failures.append('"%s": %s' % (d, error))
         inverted = self._invert(module.directives)
-        canonical = directives._directive_registry.keys()
+        canonical = list(directives._directive_registry.keys())
         canonical.sort()
         canonical.remove('restructuredtext-test-directive')
         for name in canonical:
@@ -156,7 +156,7 @@ class LanguageTestCase(DocutilsTestSupport.CustomTestCase):
         if failures:
             text = ('Module docutils.parsers.rst.languages.%s:\n    %s'
                     % (self.language, '\n    '.join(failures)))
-            if type(text) is unicode:
+            if type(text) is str:
                 text = text.encode('raw_unicode_escape')
             self.fail(text)
 
@@ -174,15 +174,15 @@ class LanguageTestCase(DocutilsTestSupport.CustomTestCase):
             self.fail('No "roles" mapping in docutils.parsers.rst.languages.'
                       '%s module.' % self.language)
         failures = []
-        for d in module.roles.values():
+        for d in list(module.roles.values()):
             try:
                 method = roles._role_registry[d]
                 #if not method:
                 #    failures.append('"%s": unknown role' % d)
-            except KeyError, error:
+            except KeyError as error:
                 failures.append('"%s": %s' % (d, error))
         inverted = self._invert(module.roles)
-        canonical = roles._role_registry.keys()
+        canonical = list(roles._role_registry.keys())
         canonical.sort()
         canonical.remove('restructuredtext-unimplemented-role')
         for name in canonical:
@@ -191,7 +191,7 @@ class LanguageTestCase(DocutilsTestSupport.CustomTestCase):
         if failures:
             text = ('Module docutils.parsers.rst.languages.%s:\n    %s'
                     % (self.language, '\n    '.join(failures)))
-            if type(text) is unicode:
+            if type(text) is str:
                 text = text.encode('raw_unicode_escape')
             self.fail(text)
 

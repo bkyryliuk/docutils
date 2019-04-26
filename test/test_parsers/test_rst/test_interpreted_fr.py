@@ -9,7 +9,7 @@ Tests for interpreted text in docutils/parsers/rst/states.py.
 Test not default/fallback language french.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.ParserTestSuite(suite_settings={'language_code':'fr'})

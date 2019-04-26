@@ -8,7 +8,7 @@
 Tests for states.py.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.ParserTestSuite()
@@ -132,13 +132,13 @@ Followed by a paragraph.
         <paragraph>
             Followed by a block quote.
 """],
-[u"""\
+["""\
 Substitutions support case differences:
 
 .. |eacute| replace:: \u00E9
 .. |Eacute| replace:: \u00C9
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Substitutions support case differences:

@@ -9,7 +9,7 @@
 Tests for states.py.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 def suite():
     s = DocutilsTestSupport.SimpleTableParserTestSuite()
@@ -28,15 +28,15 @@ A table with  two columns.
  [],
  [[[0, 0, 1, ['A table with']],
    [0, 0, 1, ['two columns.']]]])],
-[u"""\
+["""\
 ============  ===============
 A tāble w̅ith  comb̲ining chars
 ============  ===============
 """,
 ([12, 15],
  [],
- [[[0, 0, 1, [u'A ta\u0304ble w\u0305ith']],
-   [0, 0, 1, [u'comb\u0332ining chars']]]])],
+ [[[0, 0, 1, ['A ta\u0304ble w\u0305ith']],
+   [0, 0, 1, ['comb\u0332ining chars']]]])],
 ["""\
 ============  ============
 A table with  two columns

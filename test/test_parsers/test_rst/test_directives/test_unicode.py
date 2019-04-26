@@ -8,7 +8,7 @@
 Tests for misc.py "unicode" directive.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 
 
 def suite():
@@ -17,7 +17,7 @@ def suite():
     return s
 
 unichr_exception = DocutilsTestSupport.exception_data(
-    unichr, int("111111111111111111", 16))[0]
+    chr, int("111111111111111111", 16))[0]
 if isinstance(unichr_exception, OverflowError):
     unichr_exception_string = 'code too large (%s)' % unichr_exception
 else:
@@ -36,7 +36,7 @@ space (|nbsp|), a backwards-not-equals (|bne|), and a captial omega (|Omega|).
 .. |bne| unicode:: U0003D U020E5
 .. |Omega| unicode:: U+003A9
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Insert an em-dash (
@@ -116,7 +116,7 @@ Copyright |copy| 2003, |BogusMegaCorp (TM)|.
 .. |BogusMegaCorp (TM)| unicode:: BogusMegaCorp U+2122
    .. with trademark sign
 """,
-u"""\
+"""\
 <document source="test data">
     <paragraph>
         Testing comments and extra text.
@@ -163,7 +163,7 @@ u"""\
         <literal_block xml:space="preserve">
             .. |too big for unicode| unicode:: 0x11111111
 """ % (unichr_exception_string,
-       DocutilsTestSupport.exception_data(unichr, int("11111111", 16))[2])]
+       DocutilsTestSupport.exception_data(chr, int("11111111", 16))[2])]
 ]
 
 

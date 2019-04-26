@@ -9,7 +9,7 @@ Tests for states.py.
 """
 
 import unittest
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 states = DocutilsTestSupport.states
 
 

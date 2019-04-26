@@ -8,7 +8,7 @@
 Tests for docutils.transforms.references.Hyperlinks.
 """
 
-from __init__ import DocutilsTestSupport
+from .__init__ import DocutilsTestSupport
 from docutils.transforms.references import PropagateTargets, \
      AnonymousHyperlinks, IndirectHyperlinks, ExternalTargets, \
      InternalTargets, DanglingReferences

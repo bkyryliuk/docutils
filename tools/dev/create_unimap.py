@@ -14,14 +14,14 @@ import sys
 import pprint
 
 if sys.version_info >= (3,0):
-    unicode = str
+    str = str
 else:
     bytes = str
-    chr = unichr
+    chr = chr
 
 
 def w(s):
-    if sys.version_info >= (3,0) and isinstance(s, unicode):
+    if sys.version_info >= (3,0) and isinstance(s, str):
         s = s.encode('utf8')
     sys.stdout.write(s)
 
@@ -70,7 +70,7 @@ unicode_map.update(text_map)
 # Now unicode_map contains the text entries plus dollar-enclosed math
 # entries for those chars for which no text entry exists.
 
-print('# $%s$' % 'Id')
+print(('# $%s$' % 'Id'))
 print('# Author: Lea Wiemann <LeWiemann@gmail.com>')
 print('# Copyright: This file has been placed in the public domain.')
 print('')
@@ -82,4 +82,4 @@ print('#')
 print('# The extraction has been done by the "create_unimap.py" script')
 print('# located at <http://docutils.sf.net/tools/dev/create_unimap.py>.')
 print('')
-print('unicode_map = %s' % pprint.pformat(unicode_map, indent=0))
+print(('unicode_map = %s' % pprint.pformat(unicode_map, indent=0)))
